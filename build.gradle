@@ -1,0 +1,28 @@
+group 'com.memoizr'
+version '1.0'
+
+repositories {
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2-1"
+    }
+}
+
+apply plugin: 'kotlin'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2-1"
+    testCompile 'junit:junit:4.12'
+}
+
+test {
+    afterTest { desc, result ->
+        println "Executing test ${desc.className.replace("Test", "")}: ${desc.name} with result: ${result.resultType}"
+    }
+}
