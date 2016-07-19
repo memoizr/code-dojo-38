@@ -5,8 +5,14 @@ sealed class  Result {
     abstract fun opposite(): Result
 }
 
-enum class Thing {
-    Rock, Paper, Scissors, Spock, Lizard;
+sealed class Outcome {
+    object Win : Outcome() { override fun toResult(): Result = Result.True }
+    object Lose : Outcome() { override fun toResult(): Result = Result.False }
+    object Draw : Outcome() { override fun toResult(): Result = Result.None }
+    abstract fun toResult(): Result
+}
 
+sealed class Thing {
+    object Rock : Thing() object Paper : Thing() object Scissors : Thing() object Spock : Thing() object Lizard : Thing()
     fun beats(other: Thing) = Fight(this).against(other)
 }
