@@ -1,146 +1,63 @@
+import Result.*
+import Thing.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ScissorsTest {
-    val self = Scissors()
-    @Test
-    fun beatsPaper() {
-        assertEquals(True, self.beats(Paper()))
-    }
-
-    @Test
-    fun losesToRock() {
-        assertEquals(False, self.beats(Rock()))
-    }
-
-    @Test
-    fun beatsLizard() {
-        assertEquals(True, self.beats(Lizard()))
-    }
-
-    @Test
-    fun losesToSpock() {
-        assertEquals(False, self.beats(Spock()))
-    }
-
-    @Test
-    fun returnsNoneAgainstSelf() {
-        assertEquals(None, self.beats(self))
-    }
+private infix fun Thing.willBeat(other: Thing) {
+    assertEquals("Was expecting $this to beat $other, but it lost.", True, this.beats(other))
 }
 
-class RockTest {
-    val self = Rock()
-
-    @Test
-    fun beatsScissors() {
-        assertEquals(True, self.beats(Scissors()))
-    }
-
-    @Test
-    fun losesToPaper() {
-        assertEquals(False, self.beats(Paper()))
-    }
-
-    @Test
-    fun beatsLizard() {
-        assertEquals(True, self.beats(Lizard()))
-    }
-
-    @Test
-    fun losesToSpock() {
-        assertEquals(False, self.beats(Spock()))
-    }
-
-    @Test
-    fun returnsNoneAgainstSelf() {
-        assertEquals(None, self.beats(self))
-    }
+private infix fun Thing.willLoseTo(other: Thing) {
+    assertEquals("Was expecting $this to lose to $other, but it won.", False, this.beats(other))
 }
 
-class PaperTest {
-    val self = Paper()
-
-    @Test
-    fun beatsRock() {
-        assertEquals(True, self.beats(Rock()))
-    }
-
-    @Test
-    fun losesToScissors() {
-        assertEquals(False, self.beats(Scissors()))
-    }
-
-    @Test
-    fun losesToLizard() {
-        assertEquals(False, self.beats(Lizard()))
-    }
-
-    @Test
-    fun beatsSpock() {
-        assertEquals(True, self.beats(Spock()))
-    }
-
-    @Test
-    fun returnsNoneAgainstSelf() {
-        assertEquals(None, self.beats(self))
-    }
+private infix fun Thing.willDrawWith(other: Thing) {
+    assertEquals("Was expecting $this to draw with $other, but the result was different", None, this.beats(other))
 }
 
-class LizardTest {
-    val self = Lizard()
-
+class GameTest {
     @Test
-    fun losesToRock() {
-        assertEquals(False, self.beats(Rock()))
+    fun scissorsRules() {
+        Scissors willBeat Lizard
+        Scissors willBeat Paper
+        Scissors willDrawWith Scissors
+        Scissors willLoseTo Rock
+        Scissors willLoseTo Spock
     }
 
     @Test
-    fun losesToScissors() {
-        assertEquals(False, self.beats(Scissors()))
+    fun rockRules() {
+        Rock willBeat Lizard
+        Rock willBeat Scissors
+        Rock willDrawWith Rock
+        Rock willLoseTo Paper
+        Rock willLoseTo Spock
     }
 
     @Test
-    fun beatsPaper() {
-        assertEquals(True, self.beats(Paper()))
+    fun paperRules() {
+        Paper willBeat Rock
+        Paper willBeat Spock
+        Paper willDrawWith Paper
+        Paper willLoseTo Lizard
+        Paper willLoseTo Scissors
     }
 
     @Test
-    fun beatsSpock() {
-        assertEquals(True, self.beats(Spock()))
+    fun lizardRules() {
+        Lizard willBeat Paper
+        Lizard willBeat Spock
+        Lizard willDrawWith Lizard
+        Lizard willLoseTo Rock
+        Lizard willLoseTo Scissors
     }
 
     @Test
-    fun returnsNoneAgainstSelf() {
-        assertEquals(None, self.beats(self))
-    }
-}
-
-class SpockTest {
-    val self = Spock()
-
-    @Test
-    fun beatsRock() {
-        assertEquals(True, self.beats(Rock()))
-    }
-
-    @Test
-    fun beatsScissors() {
-        assertEquals(True, self.beats(Scissors()))
-    }
-
-    @Test
-    fun losesToPaper() {
-        assertEquals(False, self.beats(Paper()))
-    }
-
-    @Test
-    fun losesToLizard() {
-        assertEquals(False, self.beats(Lizard()))
-    }
-
-    @Test
-    fun returnsNoneAgainstSelf() {
-        assertEquals(None, self.beats(self))
+    fun spockRules() {
+        Spock willBeat Rock
+        Spock willBeat Scissors
+        Spock willDrawWith Spock
+        Spock willLoseTo Lizard
+        Spock willLoseTo Paper
     }
 }
