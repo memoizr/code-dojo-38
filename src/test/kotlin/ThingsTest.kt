@@ -3,18 +3,6 @@ import Thing.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-private infix fun Thing.willBeat(other: Thing) {
-    assertEquals("Was expecting $this to beat $other, but it lost.", True, this.beats(other))
-}
-
-private infix fun Thing.willLoseTo(other: Thing) {
-    assertEquals("Was expecting $this to lose to $other, but it won.", False, this.beats(other))
-}
-
-private infix fun Thing.willDrawWith(other: Thing) {
-    assertEquals("Was expecting $this to draw with $other, but the result was different", None, this.beats(other))
-}
-
 class GameTest {
     @Test
     fun scissorsRules() {
@@ -60,4 +48,16 @@ class GameTest {
         Spock willLoseTo Lizard
         Spock willLoseTo Paper
     }
+}
+
+private infix fun Thing.willBeat(other: Thing) {
+    assertEquals("Was expecting $this to beat $other, but it lost.", True, this.beats(other))
+}
+
+private infix fun Thing.willLoseTo(other: Thing) {
+    assertEquals("Was expecting $this to lose to $other, but it won.", False, this.beats(other))
+}
+
+private infix fun Thing.willDrawWith(other: Thing) {
+    assertEquals("Was expecting $this to draw with $other, but the result was different", None, this.beats(other))
 }
